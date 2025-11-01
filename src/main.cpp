@@ -42,9 +42,13 @@ class $modify(MyLevelCell, LevelCell) {
 
             float globalListIconX = 0.0f;
             if (orbLabel) 
-                globalListIconX = orbLabel->getScaleX() * orbLabel->getContentWidth() + orbLabel->getPositionX() + 15.0f;
+                globalListIconX = orbLabel->getScaleX() * orbLabel->getContentWidth() + orbLabel->getPositionX() +
+                (downloadIcon->getPositionX() - downloadIcon->getContentWidth() * downloadIcon->getScaleX() / 2 -
+                lengthLabel->getContentWidth() * lengthLabel->getScaleX() - lengthLabel->getPositionX());
             else
-                globalListIconX = likesLabel->getScaleX() * likesLabel->getContentWidth() + likesLabel->getPositionX() + 15.0f;
+                globalListIconX = likesLabel->getScaleX() * likesLabel->getContentWidth() + likesLabel->getPositionX() +
+                (downloadIcon->getPositionX() - downloadIcon->getContentWidth() * downloadIcon->getScaleX() / 2 -
+                lengthLabel->getContentWidth() * lengthLabel->getScaleX() - lengthLabel->getPositionX());
 
             auto globalListIcon = CCSprite::create("global-list.png"_spr);
             globalListIcon->setScale(0.45f);
@@ -64,7 +68,8 @@ class $modify(MyLevelCell, LevelCell) {
             globalListLabel->setID("global-list-label"_spr);
             levelCellMain->addChild(globalListLabel);
 
-            float gap = (likesIcon->getPositionX() - likesIcon->getContentWidth() * likesIcon->getScaleX() / 2) - (downloadLabel->getContentWidth() * downloadLabel->getScaleX() + downloadLabel->getPositionX());
+            float gap = (likesIcon->getPositionX() - likesIcon->getContentWidth() * likesIcon->getScaleX() / 2) -
+                (downloadLabel->getContentWidth() * downloadLabel->getScaleX() + downloadLabel->getPositionX());
             bool gapFlag = false;
             if (globalListLabel->getPositionX() > 310.0f) {
                 gapFlag = true;
