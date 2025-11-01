@@ -27,7 +27,9 @@ class $modify(MyLevelCell, LevelCell) {
     void loadFromLevel(GJGameLevel* level) {
         LevelCell::loadFromLevel(level);
 
-        if ( level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) || level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) || ( level->getAverageDifficulty() == int(GJDifficulty::Insane) && level->m_stars == 0)) {
+        if (level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) ||
+            level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) ||(
+            level->getAverageDifficulty() == int(GJDifficulty::Insane) && level->m_stars == 0)) {
             auto levelCellMain = this->getChildByID("main-layer");
             auto downloadIcon = levelCellMain->getChildByID("downloads-icon");
             auto downloadLabel = levelCellMain->getChildByID("downloads-label");
@@ -166,7 +168,9 @@ class $modify(LevelInfoLayer) {
     bool init(GJGameLevel* level, bool challenge) {
         if (!LevelInfoLayer::init(level, challenge)) return false;
 
-        if (level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) || level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) || (level->getAverageDifficulty() == int(GJDifficulty::Insane) && level->m_stars == 0)) {
+        if (level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) ||
+            level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) || (
+            level->getAverageDifficulty() == int(GJDifficulty::Insane) && level->m_stars == 0)) {
             float globalListIconY = 0.0f;
 
             auto downloadIcon = this->getChildByID("downloads-icon");
@@ -260,7 +264,7 @@ class $modify(LevelInfoLayer) {
                     }
                 }
                 else if (e->isCancelled()) {
-                    log::warn("Req is canceled");
+                    log::warn("Request is canceled");
                     globalListLabel->setString("N/A");
                 }
                 });
