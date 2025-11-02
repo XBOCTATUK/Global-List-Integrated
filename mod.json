@@ -8,9 +8,9 @@
 	},
 	"id": "xboctatuk.globallistpositions",
 	"name": "GlobalList Positions",
-	"version": "v1.0.3",
+	"version": "v1.0.4",
 	"developer": "xboctatuk",
-	"description": "",
+	"description": "This mod adds the level position from demonlist.org to the level info.",
 	"resources": {
 		"sprites": [
 			"resources/*.png"
@@ -24,5 +24,6 @@
 		"interface"
 	]
 }
+
 
 
