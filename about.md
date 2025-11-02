@@ -1,5 +1,5 @@
 # GlobalList Positions
-This mod adds the level position from demoblist.org to the level info.
+This mod adds the level position from demonlist.org to the level info.
 
 ![Screen 1](xboctatuk.globallistpositions/screen-1.png?width=300)
 
