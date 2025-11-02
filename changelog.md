@@ -9,3 +9,6 @@
 
 # 1.0.3
 - Fixed mod desc (demoblist => demonlist)
+
+# 1.0.4
+- Just a little patch
