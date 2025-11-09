@@ -1,4 +1,4 @@
-# GlobalList Positions
+# Global Demonlist Positions
 This mod adds the level position from demonlist.org to the level info.
 
 <img src="resources/screen-1.png" width="auto" alt="first screen" />
