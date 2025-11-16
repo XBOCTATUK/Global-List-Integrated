@@ -28,10 +28,13 @@ class $modify(MyLevelCell, LevelCell) {
         LevelCell::loadFromLevel(level);
         auto compactLists = Loader::get()->getLoadedMod("cvolton.compact_lists");
 
-        if (level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) ||
-            level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) || (
-                level->getAverageDifficulty() == int(GJDifficulty::Insane) && level->m_stars == 0)) {
-            auto levelCellMain = this->getChildByID("main-layer");
+        auto levelCellMain = this->getChildByID("main-layer");
+        auto infoLabel = levelCellMain->getChildByID("info-label");
+
+        if ( !infoLabel && (level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) ||
+            level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) ||
+            (level->getAverageDifficulty() == int(GJDifficulty::Insane) && level->m_stars == 0))) {
+            
             auto downloadIcon = levelCellMain->getChildByID("downloads-icon");
             auto downloadLabel = levelCellMain->getChildByID("downloads-label");
             auto likesIcon = levelCellMain->getChildByID("likes-icon");
@@ -55,12 +58,12 @@ class $modify(MyLevelCell, LevelCell) {
             globalListIcon->setScale(0.45f);
             globalListIcon->setContentSize({ 23.5f, 23.5f });
             globalListIcon->setAnchorPoint({ 0.5f, 0.5f });
-            globalListIcon->setPosition({ globalListIconX, 13.0f });
+            globalListIcon->setPosition({ globalListIconX + globalListIcon->getContentWidth() * 0.45f / 2.0f, 13.0f});
             globalListIcon->refreshTextureRect();
             globalListIcon->setID("global-list-icon"_spr);
             levelCellMain->addChild(globalListIcon);
 
-            float globalListLabelX = globalListIconX + globalListIcon->getContentWidth() / 2;
+            float globalListLabelX = globalListIconX + globalListIcon->getContentWidth() / 2 + 3.0f;
 
             auto globalListLabel = CCLabelBMFont::create("...", "bigFont.fnt");
             globalListLabel->setScale(0.4f);

@@ -1,3 +1,7 @@
+# 1.1.5
+- Fixed UI on level cell.
+- Fixed a crash when opening an editor tab. (I hope)
+
 # 1.1.4
 - A little reliability fix.
 
