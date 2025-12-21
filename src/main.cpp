@@ -1,11 +1,7 @@
+#include "./GlobalListLayer/GlobalListLayer.hpp"
 #include <Geode/modify/LevelCell.hpp>
 #include <Geode/modify/LevelInfoLayer.hpp>
 #include <Geode/modify/LevelSearchLayer.hpp>
-#include "./GlobalListLayer/GlobalListLayer.hpp"
-
-namespace geode::prelude {
-    std::unordered_map<std::string, int> g_positionsCache;
-}
 
 class $modify(LevelCell) {
     struct Fields {

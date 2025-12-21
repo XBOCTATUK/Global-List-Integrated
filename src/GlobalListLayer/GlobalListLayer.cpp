@@ -1,3 +1,4 @@
+#include "./GlobalListLayer.hpp"
 #include <Geode/binding/AppDelegate.hpp>
 #include <Geode/binding/CustomListView.hpp>
 #include <Geode/binding/GameLevelManager.hpp>
@@ -8,7 +9,6 @@
 #include <Geode/binding/SetIDPopup.hpp>
 #include <Geode/loader/Mod.hpp>
 #include <random>
-#include "./GlobalListLayer.hpp"
 
 GlobalListLayer* GlobalListLayer::create() {
 	auto ret = new GlobalListLayer();
@@ -231,6 +231,7 @@ void GlobalListLayer::loadGlobalList() {
 					return;
 				}
 
+				g_positionsCache[std::to_string(levelID)] = place;
 				m_levels.push_back({ levelID, name, place });
 			}
 

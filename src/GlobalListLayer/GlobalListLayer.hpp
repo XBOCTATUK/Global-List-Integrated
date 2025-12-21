@@ -1,3 +1,5 @@
+#pragma once
+
 #include <Geode/Geode.hpp>
 #include <Geode/binding/LevelManagerDelegate.hpp>
 #include <Geode/binding/SetIDPopupDelegate.hpp>
@@ -5,6 +7,8 @@
 #include <Geode/utils/web.hpp>
 
 using namespace geode::prelude;
+
+inline std::unordered_map<std::string, int> g_positionsCache;
 
 class GlobalListLevel {
 public:
