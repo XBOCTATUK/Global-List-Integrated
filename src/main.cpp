@@ -160,7 +160,9 @@ class $modify(MyLevelCell, LevelCell) {
                 }
                 else if (e->isCancelled()) {
                     log::warn("Request is canceled");
-                    globalListLabel->setString("N/A");
+                    globalListLabel->removeMeAndCleanup();
+                    globalListIcon->removeMeAndCleanup();
+                    for (auto& [node, xPos] : originalPositions) if (node) node->setPositionX(xPos);
                 }
             });
             auto task = req.get(url);
@@ -260,7 +262,7 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
                         log::error("Request error: {}", res->code());
                         globalListLabel->removeMeAndCleanup();
                         globalListIcon->removeMeAndCleanup();
-                        for (auto& [node, xPos] : originalPositions) if (node) node->setPositionX(xPos);
+                        for (auto& [node, yPos] : originalPositions) if (node) node->setPositionY(yPos);
                     }
                     else {
                         auto data = res->json();
@@ -310,6 +312,7 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
                     log::warn("Request is canceled");
                     globalListLabel->removeMeAndCleanup();
                     globalListIcon->removeMeAndCleanup();
+                    for (auto& [node, yPos] : originalPositions) if (node) node->setPositionY(yPos);
                 }
             });
             auto task = req.get(url);
