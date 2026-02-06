@@ -18,7 +18,7 @@ class $modify(MyLevelCell, LevelCell) {
 
     void loadFromLevel(GJGameLevel* level) {
         LevelCell::loadFromLevel(level);
-        if (!level || g_levelsWithoutPositions.contains(level->m_levelID.value())) return;
+        if (!level || level->m_levelType == GJLevelType::Main || level->m_levelType == GJLevelType::Editor || g_levelsWithoutPositions.contains(level->m_levelID.value())) return;
 
         auto levelCellMain = this->getChildByID("main-layer");
         auto infoLabel = levelCellMain->getChildByID("info-label");
@@ -183,7 +183,7 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
 
     bool init(GJGameLevel* level, bool challenge) {
         if (!LevelInfoLayer::init(level, challenge)) return false;
-        if (!level || g_levelsWithoutPositions.contains(level->m_levelID.value())) return true;
+        if (!level || level->m_levelType == GJLevelType::Main || level->m_levelType == GJLevelType::Editor || g_levelsWithoutPositions.contains(level->m_levelID.value())) return true;
 
         if (level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) ||
             level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) || (
