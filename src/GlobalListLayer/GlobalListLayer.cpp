@@ -231,7 +231,7 @@ void GlobalListLayer::loadGlobalList() {
 					return;
 				}
 
-				g_positionsCache[std::to_string(levelID)] = place;
+				g_positionsCache[levelID] = place;
 				m_levels.push_back({ levelID, name, place });
 			}
 

@@ -4,9 +4,9 @@
 #include <Geode/modify/LevelSearchLayer.hpp>
 
 void removeMyNodesAndRestorePositions(const int levelID, CCNode* globalListLabel, CCNode* globalListIcon, const std::unordered_map<CCNode*, float>& originalPositions, const bool forLevelCell) {
-    g_levelsWithoutPositions.push_back(levelID);
-    if (globalListLabel) globalListLabel->removeMeAndCleanup();
-    if (globalListIcon) globalListIcon->removeMeAndCleanup();
+    g_levelsWithoutPositions[levelID] = true;
+    if (globalListLabel) globalListLabel->setVisible(false);
+    if (globalListIcon) globalListIcon->setVisible(false);
     if (forLevelCell) { for (auto& [node, xPos] : originalPositions) if (node) node->setPositionX(xPos); }
     else { for (auto& [node, yPos] : originalPositions) if (node) node->setPositionY(yPos); }
 }
@@ -18,7 +18,7 @@ class $modify(MyLevelCell, LevelCell) {
 
     void loadFromLevel(GJGameLevel* level) {
         LevelCell::loadFromLevel(level);
-        if (!level || std::ranges::find(g_levelsWithoutPositions, level->m_levelID.value()) != g_levelsWithoutPositions.end()) return;
+        if (!level || g_levelsWithoutPositions.contains(level->m_levelID.value())) return;
 
         auto levelCellMain = this->getChildByID("main-layer");
         auto infoLabel = levelCellMain->getChildByID("info-label");
@@ -105,8 +105,8 @@ class $modify(MyLevelCell, LevelCell) {
         auto globalListIcon = static_cast<CCSprite*>(this->m_mainLayer->getChildByID("global-list-icon"_spr));
         auto globalListLabel = static_cast<CCLabelBMFont*>(this->m_mainLayer->getChildByID("global-list-label"_spr));
 
-        if (g_positionsCache.contains(std::to_string(levelID))) {
-            globalListLabel->setString(fmt::format("#{}", g_positionsCache[std::to_string(levelID)]).c_str());
+        if (g_positionsCache.contains(levelID)) {
+            globalListLabel->setString(fmt::format("#{}", g_positionsCache[levelID]).c_str());
         }
         else {
             std::string url = "https://api.demonlist.org/level/classic/get?ingame_id=" + std::to_string(levelID);
@@ -155,7 +155,7 @@ class $modify(MyLevelCell, LevelCell) {
                         int place = levelData["placement"].asInt().ok().value();
 
                         if (place != 0) {
-                            g_positionsCache[std::to_string(levelID)] = place;
+                            g_positionsCache[levelID] = place;
 
                             std::string globalListLabellStr = "#" + std::to_string(place);
                             globalListLabel->setString(globalListLabellStr.c_str());
@@ -183,7 +183,7 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
 
     bool init(GJGameLevel* level, bool challenge) {
         if (!LevelInfoLayer::init(level, challenge)) return false;
-        if (!level || std::ranges::find(g_levelsWithoutPositions, level->m_levelID.value()) != g_levelsWithoutPositions.end()) return true;
+        if (!level || g_levelsWithoutPositions.contains(level->m_levelID.value())) return true;
 
         if (level->m_demonDifficulty == int(DemonDifficultyType::ExtremeDemon) ||
             level->m_demonDifficulty == int(DemonDifficultyType::InsaneDemon) || (
@@ -256,8 +256,8 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
         auto globalListIcon = static_cast<CCLabelBMFont*>(this->getChildByIDRecursive("global-list-icon"_spr));
         auto globalListLabel = static_cast<CCLabelBMFont*>(this->getChildByIDRecursive("global-list-label"_spr));
 
-        if (g_positionsCache.contains(std::to_string(levelID))) {
-            globalListLabel->setString(fmt::format("#{}", g_positionsCache[std::to_string(levelID)]).c_str());
+        if (g_positionsCache.contains(levelID)) {
+            globalListLabel->setString(fmt::format("#{}", g_positionsCache[levelID]).c_str());
         }
         else {
             std::string url = "https://api.demonlist.org/level/classic/get?ingame_id=" + std::to_string(levelID);
@@ -303,7 +303,7 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
                         int place = levelData["placement"].asInt().ok().value();
 
                         if (place != 0) {
-                            g_positionsCache[std::to_string(levelID)] = place;
+                            g_positionsCache[levelID] = place;
                             globalListLabel->setString(fmt::format("#{}", place).c_str());
                         }
                         else {
