@@ -1,5 +1,5 @@
 # 2.0.1
-- 
+- Now level info is updated no more often than every 10 minutes.
 
 # 2.0.0
 - Ported to <cy>GD</c> 2.2081 (<cd>Geode</c> v5.0.0).
