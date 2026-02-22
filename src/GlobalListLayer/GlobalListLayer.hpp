@@ -90,7 +90,7 @@ protected:
 	std::string m_query;
 	std::vector<int> m_searchResults;
 
-	bool init() override;
+	bool init();
 	void failure(int code);
 	void populateList(const std::string& query, bool useFilters = true);
 	void search();

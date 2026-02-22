@@ -399,9 +399,9 @@ bool GlobalListLayer::isSuitable(GlobalListLevel level) {
 
 	int levelDiff = 0;
 	if (level.placement <= 50) levelDiff = 0;
-	else if (level.placement <= 150) levelDiff = 1;
-	else if (level.placement <= 300) levelDiff = 2;
-	else if (level.placement > 300) levelDiff = 3;
+	if (level.placement <= 150) levelDiff = 1;
+	if (level.placement <= 300) levelDiff = 2;
+	if (level.placement > 300) levelDiff = 3;
 	if (g_storedFilters.diffFilter[4] && (g_storedFilters.customDiffFilter[0] != 0 ? level.placement > g_storedFilters.customDiffFilter[0] : true) && (g_storedFilters.customDiffFilter[1] != 0 ? level.placement <= g_storedFilters.customDiffFilter[1] : true)) levelDiff = 4;
 
 	bool byLength = g_storedFilters.lengthFilter[levelLength] || g_storedFilters.lengthFilter == g_defaultFilters.lengthFilter;
