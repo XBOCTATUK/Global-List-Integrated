@@ -1,11 +1,15 @@
+# 2.0.2
+- <co>Fixed</c> difficulty filter.
+- <cg>Increased</c> the time between level data updates to 15 minutes.
+
 # 2.0.1
 - Now level info is updated no more often than every 10 minutes.
 
 # 2.0.0
-- Ported to <cy>GD</c> 2.2081 (<cd>Geode</c> v5.0.0).
+- <cb>Ported</c> to <cy>GD</c> 2.2081 (<cd>Geode</c> v5.0.0).
 - Added <cy>Filters Menu</c> for in-game demonlist.
-- <cr>Mass</c> code refactor (Thanks to <cp>Erymanthus</c> for some tips).
-- And other minor improvements.
+- <cp>Mass code refactor</c> (Thanks to <cp>Erymanthus</c> for some tips).
+- <cc>And other minor improvements</c>.
 
 # 1.1.7
 - The mod now uses the new Global Demonlist API.
