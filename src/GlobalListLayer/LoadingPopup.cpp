@@ -14,7 +14,7 @@ bool LoadingPopup::init() {
 	if (!Popup::init(200.0f, 120.0f)) return false;
 
 	this->setID("loading-menu");
-	//this->setZOrder(102);
+	this->setZOrder(102);
 	this->setTitle("Level data loading");
 
 	m_closeBtn->setVisible(false);
@@ -149,7 +149,6 @@ void LoadingPopup::loadPlayerInfo(std::string username) {
 
 void LoadingPopup::loadPlayerRecords(int id, std::string username) {
 	std::string url = "https://api.demonlist.org/user/record/list?user_id=" + std::to_string(id);
-	log::info("{}", url);
 	auto req = web::WebRequest();
 
 	m_listener.spawn(req.get(url), [this, id, username](web::WebResponse value) {

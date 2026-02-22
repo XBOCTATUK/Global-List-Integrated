@@ -105,7 +105,6 @@ class $modify(MyLevelCell, LevelCell) {
             updatePlacement(placement);
         }
         else {
-            log::info("https://api.demonlist.org/level/classic/get?ingame_id={}", levelID);
             m_fields->m_listener.spawn(web::WebRequest().get(fmt::format("https://api.demonlist.org/level/classic/get?ingame_id={}", levelID)),
             [this, levelID](web::WebResponse value) {
                 int placement = -1;

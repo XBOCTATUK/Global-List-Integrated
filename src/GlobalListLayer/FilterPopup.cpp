@@ -19,7 +19,7 @@ bool FilterPopup::init() {
 	if (!Popup::init(450.0f, 280.0f)) return false;
 
 	this->setID("filter-menu");
-	//this->setZOrder(100);
+	this->setZOrder(100);
 	this->setTitle("Search filters");
 
 	auto lengthFilterBG = CCScale9Sprite::create("square02b_001.png");
@@ -281,8 +281,7 @@ bool FilterPopup::init() {
 		int lastUpdate = Mod::get()->getSavedValue<int64_t>("lastLevelDataUpdate", 0);
 		int difference = timestamp - lastUpdate;
 
-		// log::info("{}", !g_levelFilters.isDataRequired() || (g_levelsData.empty() ? false : difference < 600));
-		if (!g_levelFilters.isDataRequired() || (g_levelsData.empty() ? false : difference < 600)) {
+		if (!g_levelFilters.isDataRequired() || (g_levelsData.empty() ? false : difference < 900)) {
 			g_storedFilters = g_levelFilters;
 			auto scene = CCDirector::get()->getRunningScene();
 			auto globalListLayer = static_cast<GlobalListLayer*>(scene->getChildByID("GlobalListLayer"));

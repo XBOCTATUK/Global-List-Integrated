@@ -14,7 +14,7 @@ bool RangePopup::init(int filterType) {
 	if (!Popup::init(200.0f, 120.0f)) return false;
 
 	this->setID("range-menu");
-	//this->setZOrder(102);
+	this->setZOrder(102);
 	this->setTitle(filterType == 0 ? "Custom length" : "Custom difficulty");
 
 	m_closeBtn->setVisible(false);
@@ -40,8 +40,8 @@ bool RangePopup::init(int filterType) {
 
 	auto okSpr = ButtonSprite::create("Ok");
 	auto okBtn = CCMenuItemExt::createSpriteExtra(okSpr, [this, filterType](auto) {
-		int from = std::stoi(m_fromTextInput->getString().size() != 0 ? m_fromTextInput->getString() : "0");
-		int to = std::stoi(m_toTextInput->getString().size() != 0 ? m_toTextInput->getString() : "0");
+		int from = numFromString<int>(m_fromTextInput->getString().size() != 0 ? m_fromTextInput->getString() : "0").unwrapOrDefault();
+		int to = numFromString<int>(m_toTextInput->getString().size() != 0 ? m_toTextInput->getString() : "0").unwrapOrDefault();
 		auto& saved = m_filterType == 0 ? g_levelFilters.customLengthFilter : g_levelFilters.customDiffFilter;
 
 		if (filterType == 0) saved = {from, to};
@@ -59,8 +59,8 @@ bool RangePopup::init(int filterType) {
 }
 
 void RangePopup::onClose(cocos2d::CCObject*) {
-	int from = std::stoi(m_fromTextInput->getString().size() != 0 ? m_fromTextInput->getString() : "0");
-	int to = std::stoi(m_toTextInput->getString().size() != 0 ? m_toTextInput->getString() : "0");
+	int from = numFromString<int>(m_fromTextInput->getString().size() != 0 ? m_fromTextInput->getString() : "0").unwrapOrDefault();
+	int to = numFromString<int>(m_toTextInput->getString().size() != 0 ? m_toTextInput->getString() : "0").unwrapOrDefault();
 
 	auto& saved = m_filterType == 0 ? g_levelFilters.customLengthFilter : g_levelFilters.customDiffFilter;
 	if (from != saved[0] || to != saved[1]) {

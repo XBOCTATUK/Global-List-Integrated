@@ -35,7 +35,7 @@ constexpr const char* globalListInfo =
 bool GlobalListLayer::init() {
 	if (!CCLayer::init()) return false;
 	setID("GlobalListLayer");
-
+	g_levelFilters = g_defaultFilters;
 	auto winSize = CCDirector::get()->getWinSize();
 
 	auto GlobalListBG = CCSprite::create("global-list-bg.png"_spr);
@@ -44,7 +44,7 @@ bool GlobalListLayer::init() {
 	if (winSize.width > GlobalListBG->getContentWidth() * GlobalListBG->getScale())
 		GlobalListBG->setScale(winSize.width / GlobalListBG->getTextureRect().size.width);
 	GlobalListBG->setPosition({ winSize.width / 2, winSize.height / 2 });
-	//GlobalListBG->setZOrder(0);
+	GlobalListBG->setZOrder(0);
 	GlobalListBG->setID("gdl-backgrownd");
 	addChild(GlobalListBG);
 
@@ -214,7 +214,6 @@ bool GlobalListLayer::init() {
 }
 
 void GlobalListLayer::loadGlobalList() {
-	log::info("loadGlobalList");
 	std::string url = "https://api.demonlist.org/level/classic/list";
 
 	auto req = web::WebRequest();
@@ -317,7 +316,6 @@ void GlobalListLayer::search() {
 }
 
 void GlobalListLayer::loadLevelsFinished(CCArray* levels, const char*, int) {
-	log::info("loadLevelsFinished");
 	if (auto listView = m_levelList->m_listView) {
 		listView->removeFromParent();
 		listView->release();
@@ -400,8 +398,9 @@ bool GlobalListLayer::isSuitable(GlobalListLevel level) {
 	if (g_storedFilters.lengthFilter[4] && (g_storedFilters.customLengthFilter[0] != 0 ? level.length >= g_storedFilters.customLengthFilter[0] : true) && (g_storedFilters.customLengthFilter[1] != 0 ? level.length <= g_storedFilters.customLengthFilter[1] : true)) levelLength = 4;
 
 	int levelDiff = 0;
-	if (level.placement > 50 && level.placement <= 150) levelDiff = 1;
-	else if (level.placement > 150 && level.placement <= 300) levelDiff = 2;
+	if (level.placement <= 50) levelDiff = 0;
+	else if (level.placement <= 150) levelDiff = 1;
+	else if (level.placement <= 300) levelDiff = 2;
 	else if (level.placement > 300) levelDiff = 3;
 	if (g_storedFilters.diffFilter[4] && (g_storedFilters.customDiffFilter[0] != 0 ? level.placement > g_storedFilters.customDiffFilter[0] : true) && (g_storedFilters.customDiffFilter[1] != 0 ? level.placement <= g_storedFilters.customDiffFilter[1] : true)) levelDiff = 4;
 
