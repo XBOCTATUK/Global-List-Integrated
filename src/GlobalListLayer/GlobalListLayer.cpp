@@ -25,6 +25,7 @@ constexpr const char* globalListInfo =
 // I'm too silly to do something like this completely on my own =3
 bool GlobalListLayer::init() {
 	if (!CCLayer::init()) return false;
+
 	setID("GlobalListLayer");
 	g_levelFilters = g_defaultFilters;
 	auto winSize = CCDirector::get()->getWinSize();
@@ -253,9 +254,8 @@ void GlobalListLayer::populateList(const std::string& query, bool useFilters) {
 			m_searchResults.push_back(level.levelID);
 	}
 	else {
-		auto lowerQuery = string::toLower(query);
 		for (const auto& [key, level] : g_levels) {
-			if (isSuitable(level) && (level.name.contains(query) || query == std::to_string(level.levelID)))
+			if (isSuitable(level) && level.contains(query))
 				m_searchResults.push_back(level.levelID);
 		}
 	}
@@ -393,7 +393,7 @@ bool GlobalListLayer::isSuitable(GlobalListLevel level) {
 	else if (!g_storedFilters.diffFilter[4] && g_storedFilters.diffFilter[1] && level.placement <= 150) diffFilter = true;
 	else if (!g_storedFilters.diffFilter[4] && g_storedFilters.diffFilter[2] && level.placement <= 300) diffFilter = true;
 	else if (!g_storedFilters.diffFilter[4] && g_storedFilters.diffFilter[3] && level.placement > 300) diffFilter = true;
-	else if (g_storedFilters.diffFilter[4] && (g_storedFilters.customDiffFilter[0] != 0 ? level.placement > g_storedFilters.customDiffFilter[0] : true) && (g_storedFilters.customDiffFilter[1] != 0 ? level.placement <= g_storedFilters.customDiffFilter[1] : true)) diffFilter = true;
+	else if (g_storedFilters.diffFilter[4] && (g_storedFilters.customDiffFilter[0] != 0 ? level.placement >= g_storedFilters.customDiffFilter[0] : true) && (g_storedFilters.customDiffFilter[1] != 0 ? level.placement < g_storedFilters.customDiffFilter[1] : true)) diffFilter = true;
 
 	bool byLength = g_storedFilters.lengthFilter[levelLength] || g_storedFilters.lengthFilter == g_defaultFilters.lengthFilter;
 	bool byDifficulty = diffFilter || g_storedFilters.diffFilter == g_defaultFilters.diffFilter;

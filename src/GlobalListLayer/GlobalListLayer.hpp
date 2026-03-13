@@ -56,9 +56,12 @@ public:
 	int placement;
 	int length;
 
-	bool contains(std::string obj) {
-		if (this->name.find(obj) != std::string::npos) return true;
-		else if (std::to_string(this->levelID) == obj) return true;
+	bool contains(std::string query) const {
+		auto lowerName = string::toLower(this->name);
+		auto lowerQuery = string::toLower(query);
+		
+		if (lowerName.find(lowerQuery) != std::string::npos) return true;
+		else if (std::to_string(this->levelID) == query) return true;
 		else return false;
 	}
 };

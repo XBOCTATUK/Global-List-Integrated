@@ -2,8 +2,10 @@
 This mod adds some <b>features</b> from [demonlist.org](https://demonlist.org) to GD.
 
 ## Mod Features:
-- Adds the <b>level placement</b> from the <b>Global List</b> to the level info.
-- Adds an <b>in-game demonlist</b> on search menu.
+- A button in the level search screen that opens the demonlist
+- Search levels by name or ID on the demonlist screen
+- Filter levels by difficulty, length, rating, etc.
+- Level's placement from the demonlist next to the level info
 
 <img src="resources/GDI-screen1.png" width="auto" alt="first screen" />
 <img src="resources/GDI-screen2.png" width="auto" alt="second screen" />

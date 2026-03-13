@@ -15,6 +15,13 @@ constexpr const char* filterWarning =
 "To avoid a temporary ban(up to 1 hour), please avoid updating too frequently."
 "Click <cr>I confirm</c> to continue, confirming your understanding of this limitation.";
 
+constexpr const char* filterInfo =
+"<cc>The difficulty filter</c> allows you to select levels in the top 50/150/300, Unbounded, or your range.\n"
+"<cc>The length filter</c> allows you to select lengths up to 30/60/120/>120, or your range.\n"
+"The <cg>rated</c> and <cr>unrated</c> <cc>checkboxes</c> allow you to display only the corresponding levels.\n"
+"The <cg>Completed</c> <cc>checkbox</c> only has an effect if the <cf>Username</c> field is not empty and displays the player's completions.\n"
+"The <cd>Creator</c> <cc>checkbox</c> only has an effect if the <cf>Creator</c> field is not empty and displays levels from this creator.";
+
 bool FilterPopup::init() {
 	if (!Popup::init(450.0f, 280.0f)) return false;
 
@@ -22,10 +29,88 @@ bool FilterPopup::init() {
 	this->setZOrder(100);
 	this->setTitle("Search filters");
 
+	auto optionsSpr = CCSprite::createWithSpriteFrameName("GJ_optionsBtn_001.png");
+	optionsSpr->setContentSize({ 50.5f, 50.5f });
+	optionsSpr->setScale(0.46);
+
+
+	auto diffFilterBG = CCScale9Sprite::create("square02b_001.png");
+	diffFilterBG->setColor({ 123, 68, 41 });
+	diffFilterBG->setContentSize({ 365.0f, 35.0f });
+	diffFilterBG->setPosition({ 225.0f, 225.0f });
+	m_mainLayer->addChild(diffFilterBG);
+
+	auto diffFilterMenu = CCMenu::create();
+	diffFilterMenu->setLayout(RowLayout::create()
+		->setGap(16.0f)
+		->setAxisAlignment(AxisAlignment::Between)
+		->setAutoScale(false));
+	diffFilterMenu->setContentSize({ 340.0f, 35.0f });
+	diffFilterMenu->setPosition({ 225.0f, 225.0f });
+	diffFilterMenu->ignoreAnchorPointForPosition(false);
+	m_mainLayer->addChild(diffFilterMenu);
+
+	auto demonSpr = CCSprite::createWithSpriteFrameName("GJ_demonIcon_001.png");
+	demonSpr->setContentSize({ 26.5f, 26.5f });
+	demonSpr->setScale(0.90f);
+	diffFilterMenu->addChild(demonSpr);
+
+	auto top50Label = CCLabelBMFont::create("Top 50", "bigFont.fnt");
+	top50Label->setScale(0.36f);
+	if (g_levelFilters.diffFilter[0]) top50Label->setColor({ 255, 255, 255 });
+	else top50Label->setColor({ 125, 125, 125 });
+	auto top50Btn = CCMenuItemExt::createSpriteExtra(top50Label, [this, top50Label](auto) {
+		changeDiffFilter(0, top50Label);
+		});
+	diffFilterMenu->addChild(top50Btn);
+
+	auto top150Label = CCLabelBMFont::create("Top 150", "bigFont.fnt");
+	top150Label->setScale(0.36f);
+	if (g_levelFilters.diffFilter[1]) top150Label->setColor({ 255, 255, 255 });
+	else top150Label->setColor({ 125, 125, 125 });
+	auto top150Btn = CCMenuItemExt::createSpriteExtra(top150Label, [this, top150Label](auto) {
+		changeDiffFilter(1, top150Label);
+		});
+	diffFilterMenu->addChild(top150Btn);
+
+	auto top300Label = CCLabelBMFont::create("Top 300", "bigFont.fnt");
+	top300Label->setScale(0.36f);
+	if (g_levelFilters.diffFilter[2]) top300Label->setColor({ 255, 255, 255 });
+	else top300Label->setColor({ 125, 125, 125 });
+	auto top300Btn = CCMenuItemExt::createSpriteExtra(top300Label, [this, top300Label](auto) {
+		changeDiffFilter(2, top300Label);
+		});
+	diffFilterMenu->addChild(top300Btn);
+
+	auto beyondLabel = CCLabelBMFont::create("Unbounded", "bigFont.fnt");
+	beyondLabel->setScale(0.36f);
+	if (g_levelFilters.diffFilter[3]) beyondLabel->setColor({ 255, 255, 255 });
+	else beyondLabel->setColor({ 125, 125, 125 });
+	auto beyondBtn = CCMenuItemExt::createSpriteExtra(beyondLabel, [this, beyondLabel](auto) {
+		changeDiffFilter(3, beyondLabel);
+		});
+	diffFilterMenu->addChild(beyondBtn);
+
+	auto customDiffLabel = CCLabelBMFont::create("Custom", "bigFont.fnt");
+	customDiffLabel->setScale(0.36f);
+	if (g_levelFilters.diffFilter[4]) customDiffLabel->setColor({ 255, 255, 255 });
+	else customDiffLabel->setColor({ 125, 125, 125 });
+	auto customDiffBtn = CCMenuItemExt::createSpriteExtra(customDiffLabel, [this, customDiffLabel](auto) {
+		changeDiffFilter(4, customDiffLabel);
+		});
+	diffFilterMenu->addChild(customDiffBtn);
+
+	auto customDiffOptionsBtn = CCMenuItemExt::createSpriteExtra(optionsSpr, [this](auto) { RangePopup::create(1)->show(); });
+	customDiffOptionsBtn->updateLayout();
+	diffFilterMenu->addChild(customDiffOptionsBtn);
+
+	diffFilterMenu->updateLayout();
+
+
 	auto lengthFilterBG = CCScale9Sprite::create("square02b_001.png");
 	lengthFilterBG->setColor({ 123, 68, 41 });
 	lengthFilterBG->setContentSize({ 365.0f, 35.0f });
-	lengthFilterBG->setPosition({ 225.0f, 225.0f });
+	lengthFilterBG->setPosition({ 225.0f, 180.0f });
 	m_mainLayer->addChild(lengthFilterBG);
 
 	auto lengthFilterMenu = CCMenu::create();
@@ -34,7 +119,7 @@ bool FilterPopup::init() {
 		->setAxisAlignment(AxisAlignment::Between)
 		->setAutoScale(false));
 	lengthFilterMenu->setContentSize({ 340.0f, 35.0f });
-	lengthFilterMenu->setPosition({ 225.0f, 225.0f });
+	lengthFilterMenu->setPosition({ 225.0f, 180.0f });
 	lengthFilterMenu->ignoreAnchorPointForPosition(false);
 	m_mainLayer->addChild(lengthFilterMenu);
 
@@ -87,87 +172,11 @@ bool FilterPopup::init() {
 		});
 	lengthFilterMenu->addChild(customLenBtn);
 
-	auto optionsSpr = CCSprite::createWithSpriteFrameName("GJ_optionsBtn_001.png");
-	optionsSpr->setContentSize({ 50.5f, 50.5f });
-	optionsSpr->setScale(0.46);
 	auto customLenOptionsBtn = CCMenuItemExt::createSpriteExtra(optionsSpr, [this](auto) { RangePopup::create(0)->show(); });
 	customLenOptionsBtn->updateLayout();
 	lengthFilterMenu->addChild(customLenOptionsBtn);
 
 	lengthFilterMenu->updateLayout();
-
-
-	auto diffFilterBG = CCScale9Sprite::create("square02b_001.png");
-	diffFilterBG->setColor({ 123, 68, 41 });
-	diffFilterBG->setContentSize({ 365.0f, 35.0f });
-	diffFilterBG->setPosition({ 225.0f, 180.0f });
-	m_mainLayer->addChild(diffFilterBG);
-
-	auto diffFilterMenu = CCMenu::create();
-	diffFilterMenu->setLayout(RowLayout::create()
-		->setGap(16.0f)
-		->setAxisAlignment(AxisAlignment::Between)
-		->setAutoScale(false));
-	diffFilterMenu->setContentSize({ 340.0f, 35.0f });
-	diffFilterMenu->setPosition({ 225.0f, 180.0f });
-	diffFilterMenu->ignoreAnchorPointForPosition(false);
-	m_mainLayer->addChild(diffFilterMenu);
-
-	auto demonSpr = CCSprite::createWithSpriteFrameName("GJ_demonIcon_001.png");
-	demonSpr->setContentSize({ 26.5f, 26.5f });
-	demonSpr->setScale(0.90f);
-	diffFilterMenu->addChild(demonSpr);
-
-	auto top50Label = CCLabelBMFont::create("Top 50", "bigFont.fnt");
-	top50Label->setScale(0.36f);
-	if (g_levelFilters.diffFilter[0]) top50Label->setColor({ 255, 255, 255 });
-	else top50Label->setColor({ 125, 125, 125 });
-	auto top50Btn = CCMenuItemExt::createSpriteExtra(top50Label, [this, top50Label](auto) {
-		changeDiffFilter(0, top50Label);
-		});
-	diffFilterMenu->addChild(top50Btn);
-
-	auto top150Label = CCLabelBMFont::create("Top 150", "bigFont.fnt");
-	top150Label->setScale(0.36f);
-	if (g_levelFilters.diffFilter[1]) top150Label->setColor({ 255, 255, 255 });
-	else top150Label->setColor({ 125, 125, 125 });
-	auto top150Btn = CCMenuItemExt::createSpriteExtra(top150Label, [this, top150Label](auto) {
-		changeDiffFilter(1, top150Label);
-		});
-	diffFilterMenu->addChild(top150Btn);
-
-	auto top300Label = CCLabelBMFont::create("Top 300", "bigFont.fnt");
-	top300Label->setScale(0.36f);
-	if (g_levelFilters.diffFilter[2]) top300Label->setColor({ 255, 255, 255 });
-	else top300Label->setColor({ 125, 125, 125 });
-	auto top300Btn = CCMenuItemExt::createSpriteExtra(top300Label, [this, top300Label](auto) {
-		changeDiffFilter(2, top300Label);
-		});
-	diffFilterMenu->addChild(top300Btn);
-
-	auto beyondLabel = CCLabelBMFont::create("Beyond", "bigFont.fnt");
-	beyondLabel->setScale(0.36f);
-	if (g_levelFilters.diffFilter[3]) beyondLabel->setColor({ 255, 255, 255 });
-	else beyondLabel->setColor({ 125, 125, 125 });
-	auto beyondBtn = CCMenuItemExt::createSpriteExtra(beyondLabel, [this, beyondLabel](auto) {
-		changeDiffFilter(3, beyondLabel);
-		});
-	diffFilterMenu->addChild(beyondBtn);
-
-	auto customDiffLabel = CCLabelBMFont::create("Custom", "bigFont.fnt");
-	customDiffLabel->setScale(0.36f);
-	if (g_levelFilters.diffFilter[4]) customDiffLabel->setColor({ 255, 255, 255 });
-	else customDiffLabel->setColor({ 125, 125, 125 });
-	auto customDiffBtn = CCMenuItemExt::createSpriteExtra(customDiffLabel, [this, customDiffLabel](auto) {
-		changeDiffFilter(4, customDiffLabel);
-		});
-	diffFilterMenu->addChild(customDiffBtn);
-
-	auto customDiffOptionsBtn = CCMenuItemExt::createSpriteExtra(optionsSpr, [this](auto) { RangePopup::create(1)->show(); });
-	customDiffOptionsBtn->updateLayout();
-	diffFilterMenu->addChild(customDiffOptionsBtn);
-
-	diffFilterMenu->updateLayout();
 
 
 	auto otherFiltersBG = CCScale9Sprite::create("square02b_001.png");
@@ -308,6 +317,10 @@ bool FilterPopup::init() {
 	});
 	applyBtn->setPosition({ 225.0f, 28.0f });
 	m_buttonMenu->addChild(applyBtn);
+
+	auto infoBtn = InfoAlertButton::create("How to use filters", filterInfo, 1.0f);
+	infoBtn->setPosition({24.0f, 24.0f});
+	m_buttonMenu->addChild(infoBtn);
 
 	return true;
 }

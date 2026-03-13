@@ -1,9 +1,11 @@
 # Global List Integration
-This mod adds some <cy>features</c> from [demonlist.org](https://demonlist.org) to GD.
+This mod adds some <cy>features</c> from [<cj>demonlist.org</c>](https://demonlist.org) to GD.
 
 ## Mod Features:
-- Adds the <cy>level placement</c> from the <cj>Global List</c> to the level info.
-- Adds an <cy>in-game demonlist</c> on search menu.
+- A <cg>button</c> in the level search screen that opens the <cj>demonlist</c>
+- <cc>Search levels</c> by name or ID on the demonlist screen
+- <cc>Filter levels</c> by difficulty, length, rating, etc.
+- <cc>Level's placement</c> from the <cj>demonlist</c> next to the level info
 
 ![Screen 1](xboctatuk.globallistpositions/GDI-screen1.png?width=300)
 
@@ -14,8 +16,8 @@ This mod adds some <cy>features</c> from [demonlist.org](https://demonlist.org) 
 ![Screen 3](xboctatuk.globallistpositions/GDI-screen3.png?width=300)
 
 # Special Thanks
-- hiimjasmine00 (An in-game demonlist was created based on her mod <co>Integrated DemonList</c>)
+- hiimjasmine00 (An in-game demonlist was created based on her mod [<co>Integrated DemonList</c>](mod:hiimjustin000.integrated_demonlist))
 - Erymanthus (Suggested improvements to my sh**ty code =3)
 
 # Support
-Discord: lisenok1042
+Check <cy>support</c> info (<cy>yellow</c> gift button).

@@ -186,19 +186,19 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
             origPositions[exactLengthLabel] = exactLengthLabel->getPositionY();
             origPositions[orbIcon] = orbIcon->getPositionY();
             origPositions[orbLabel] = orbLabel->getPositionY();
-            downloadIcon->setPositionY(downloadIcon->getPositionY() + 14.0f);
-            downloadLabel->setPositionY(downloadLabel->getPositionY() + 14.0f);
-            likesIcon->setPositionY(likesIcon->getPositionY() + 14.0f);
-            likesLabel->setPositionY(likesLabel->getPositionY() + 14.0f);
+            downloadIcon->setPositionY(downloadIcon->getPositionY() + 14.0f - 4.0f);
+            downloadLabel->setPositionY(downloadLabel->getPositionY() + 14.0f - 4.0f);
+            likesIcon->setPositionY(likesIcon->getPositionY() + 14.0f - 2.0f);
+            likesLabel->setPositionY(likesLabel->getPositionY() + 14.0f - 2.0f);
             lengthIcon->setPositionY(lengthIcon->getPositionY() + 14.0f);
             lengthLabel->setPositionY(lengthLabel->getPositionY() + 14.0f);
             if (exactLengthLabel) exactLengthLabel->setPositionY(exactLengthLabel->getPositionY() + 14.0f);
-            orbIcon->setPositionY(orbIcon->getPositionY() + 14.0f);
-            orbLabel->setPositionY(orbLabel->getPositionY() + 14.0f);
+            orbIcon->setPositionY(orbIcon->getPositionY() + 14.0f  + 2.0f);
+            orbLabel->setPositionY(orbLabel->getPositionY() + 14.0f  + 2.0f);
 
             float gdlIconY = 0.0f;
-            if (orbIcon->isVisible()) gdlIconY = orbIcon->getPositionY() - (lengthIcon->getPositionY() - orbIcon->getPositionY());
-            else gdlIconY = lengthIcon->getPositionY() - (likesIcon->getPositionY() - lengthIcon->getPositionY());
+            if (orbIcon->isVisible()) gdlIconY = orbIcon->getPositionY() - (lengthIcon->getPositionY() - orbIcon->getPositionY()) + 4.0f;
+            else gdlIconY = lengthIcon->getPositionY() - (likesIcon->getPositionY() - lengthIcon->getPositionY() + 4.0f);
 
             float gdlIconX = lengthIcon->getPositionX() + lengthIcon->getContentWidth() / 2.0f;
 
