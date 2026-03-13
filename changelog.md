@@ -2,6 +2,7 @@
 - <cg>Added</c> description to the filter menu.
 - The search bar is now case-insensitive.
 - Mod icon on level screen does not overlap the progress bar.
+- <cg>Added</c> <cy>Support info</c>.
 
 # 2.0.3
 - <co>Fixed</c> batch system.
