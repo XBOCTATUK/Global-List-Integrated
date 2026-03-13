@@ -1,5 +1,5 @@
 # 2.0.4
-- Added description to the filter menu.
+- <cg>Added</c> description to the filter menu.
 - The search bar is now case-insensitive.
 - Mod icon on level screen does not overlap the progress bar.
 
@@ -15,7 +15,7 @@
 
 # 2.0.0
 - <cb>Ported</c> to <cy>GD</c> 2.2081 (<cd>Geode</c> v5.0.0).
-- Added <cy>Filters Menu</c> for in-game demonlist.
+- <cg>Added</c> <cy>Filters Menu</c> for in-game demonlist.
 - <cp>Mass code refactor</c> (Thanks to <cp>Erymanthus</c> for some tips).
 - <cc>And other minor improvements</c>.
 
