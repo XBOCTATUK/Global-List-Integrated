@@ -1,5 +1,5 @@
 {
-	"geode": "5.4.1",
+	"geode": "5.5.1",
 	"gd": {
 		"win": "2.2081",
 		"android": "2.2081",
@@ -8,16 +8,9 @@
 	},
 	"id": "xboctatuk.globallistpositions",
 	"name": "GList Disintegration",
-	"version": "v2.0.5-beta.1234567890",
+	"version": "v2.0.5",
 	"developer": "xboctatuk",
 	"description": "Mod adds some features from demonlist.org",
-	"settings": {
-		"april-fools": {
-			"name": "April fools",
-			"type": "bool",
-			"default": true
-		}
-	},
 	"resources": {
 		"sprites": [
 			"resources/*.png"
