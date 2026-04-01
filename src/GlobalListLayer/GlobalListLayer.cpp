@@ -18,6 +18,9 @@ CCScene* GlobalListLayer::scene() {
 	return ret;
 }
 
+constexpr const char* gListInfo =
+"A Demonlist of <cy>TOP 1 levels</c> of an <cr>extreme demon</c> difficulty";
+
 constexpr const char* globalListInfo =
 "A Demonlist of <cy>rateworthy levels</c> of an <cr>extreme demon</c> difficulty";
 
@@ -25,6 +28,7 @@ constexpr const char* globalListInfo =
 // I'm too silly to do something like this completely on my own =3
 bool GlobalListLayer::init() {
 	if (!CCLayer::init()) return false;
+	bool isApril = Mod::get()->getSettingValue<bool>("april-fools");
 
 	setID("GlobalListLayer");
 	g_levelFilters = g_defaultFilters;
@@ -49,7 +53,7 @@ bool GlobalListLayer::init() {
 
 	m_levelList = GJListLayer::create(
 		nullptr,
-		"Global Demonlist",
+		isApril ? "GList" : "Global Demonlist",
 		{ 0, 0, 0, 180 },
 		356.0f, 220.0f, 0);
 	m_levelList->setPosition(winSize / 2.0f - m_levelList->getContentSize() / 2.0f);
@@ -117,7 +121,7 @@ bool GlobalListLayer::init() {
 	m_rightButton->setID("next-page-button");
 	btnsMenu->addChild(m_rightButton);
 
-	m_infoButton = InfoAlertButton::create("Global Demonlist", globalListInfo, 1.0f);
+	m_infoButton = InfoAlertButton::create(isApril ? "GList" : "Global Demonlist", isApril ? gListInfo : globalListInfo, 1.0f);
 	m_infoButton->setPosition({ 30.0f, 30.0f });
 	m_infoButton->setID("info-button");
 	btnsMenu->addChild(m_infoButton);

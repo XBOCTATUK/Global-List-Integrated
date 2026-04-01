@@ -7,4 +7,4 @@ You can support the developer with an idea, advice, or, if you'd like, a donatio
 [Telegram Channel](https://t.me/xboctatuktgc)
 
 #### Support with a donation
-[DonationAlerts](dhttps://onationalerts.com/r/xboctatuk)
+[DonationAlerts](https://donationalerts.com/r/xboctatuk)

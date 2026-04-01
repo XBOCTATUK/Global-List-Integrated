@@ -138,8 +138,9 @@ class $modify(MyLevelCell, LevelCell) {
         if (auto gdlLabel = static_cast<CCLabelBMFont*>(levelCellMain->getChildByID("gdl-label"_spr))) {
             auto gdlIcon = levelCellMain->getChildByID("gdl-icon"_spr);
 
+            bool isApril = Mod::get()->getSettingValue<bool>("april-fools");
             if (placement == -1) gdlLabel->setString("N/A");
-            else if (placement > 0) gdlLabel->setString(fmt::format("#{}", placement).c_str());
+            else if (placement > 0) gdlLabel->setString(isApril ? "TOP 1" : fmt::format("#{}", placement).c_str());
             else removePlacement(m_level->m_levelID, gdlLabel, gdlIcon, m_fields->m_origPositions, true);
         }
     }
@@ -260,8 +261,9 @@ class $modify(MyLevelInfoLayer, LevelInfoLayer) {
         if (auto gdlLabel = static_cast<CCLabelBMFont*>(this->getChildByID("gdl-label"_spr))) {
             auto gdlIcon = this->getChildByID("gdl-icon"_spr);
 
+            bool isApril = Mod::get()->getSettingValue<bool>("april-fools");
             if (placement == -1) gdlLabel->setString("N/A");
-            else if (placement > 0) gdlLabel->setString(fmt::format("#{}", placement).c_str());
+            else if (placement > 0) gdlLabel->setString(isApril ? "TOP 1" : fmt::format("#{}", placement).c_str());
             else removePlacement(m_level->m_levelID, gdlLabel, gdlIcon, m_fields->m_origPositions, false);
         }
     }
