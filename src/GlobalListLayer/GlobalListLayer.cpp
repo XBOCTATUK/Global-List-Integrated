@@ -18,9 +18,6 @@ CCScene* GlobalListLayer::scene() {
 	return ret;
 }
 
-constexpr const char* gListInfo =
-"A Demonlist of <cy>TOP 1 levels</c> of an <cr>extreme demon</c> difficulty";
-
 constexpr const char* globalListInfo =
 "A Demonlist of <cy>rateworthy levels</c> of an <cr>extreme demon</c> difficulty";
 
@@ -28,7 +25,6 @@ constexpr const char* globalListInfo =
 // I'm too silly to do something like this completely on my own =3
 bool GlobalListLayer::init() {
 	if (!CCLayer::init()) return false;
-	bool isApril = Mod::get()->getSettingValue<bool>("april-fools");
 
 	setID("GlobalListLayer");
 	g_levelFilters = g_defaultFilters;
@@ -53,7 +49,7 @@ bool GlobalListLayer::init() {
 
 	m_levelList = GJListLayer::create(
 		nullptr,
-		isApril ? "GList" : "Global Demonlist",
+		"Global Demonlist",
 		{ 0, 0, 0, 180 },
 		356.0f, 220.0f, 0);
 	m_levelList->setPosition(winSize / 2.0f - m_levelList->getContentSize() / 2.0f);
@@ -121,7 +117,7 @@ bool GlobalListLayer::init() {
 	m_rightButton->setID("next-page-button");
 	btnsMenu->addChild(m_rightButton);
 
-	m_infoButton = InfoAlertButton::create(isApril ? "GList" : "Global Demonlist", isApril ? gListInfo : globalListInfo, 1.0f);
+	m_infoButton = InfoAlertButton::create("Global Demonlist", globalListInfo, 1.0f);
 	m_infoButton->setPosition({ 30.0f, 30.0f });
 	m_infoButton->setID("info-button");
 	btnsMenu->addChild(m_infoButton);
@@ -392,15 +388,15 @@ bool GlobalListLayer::isSuitable(GlobalListLevel level) {
 	else if (level.length >= 120) levelLength = 3;
 	if (g_storedFilters.lengthFilter[4] && (g_storedFilters.customLengthFilter[0] != 0 ? level.length >= g_storedFilters.customLengthFilter[0] : true) && (g_storedFilters.customLengthFilter[1] != 0 ? level.length <= g_storedFilters.customLengthFilter[1] : true)) levelLength = 4;
 
-	bool diffFilter = false;
-	if (!g_storedFilters.diffFilter[4] && g_storedFilters.diffFilter[0] && level.placement <= 50) diffFilter = true;
-	else if (!g_storedFilters.diffFilter[4] && g_storedFilters.diffFilter[1] && level.placement <= 150) diffFilter = true;
-	else if (!g_storedFilters.diffFilter[4] && g_storedFilters.diffFilter[2] && level.placement <= 300) diffFilter = true;
-	else if (!g_storedFilters.diffFilter[4] && g_storedFilters.diffFilter[3] && level.placement > 300) diffFilter = true;
-	else if (g_storedFilters.diffFilter[4] && (g_storedFilters.customDiffFilter[0] != 0 ? level.placement >= g_storedFilters.customDiffFilter[0] : true) && (g_storedFilters.customDiffFilter[1] != 0 ? level.placement < g_storedFilters.customDiffFilter[1] : true)) diffFilter = true;
+	int levelDiff = 0;
+	if (level.placement <= 50) levelDiff = 0;
+	else if (level.placement <= 150) levelDiff = 1;
+	else if (level.placement <= 300) levelDiff = 2;
+	else if (level.placement > 300) levelDiff = 3;
+	else if (g_storedFilters.diffFilter[4] && (g_storedFilters.customDiffFilter[0] != 0 ? level.placement >= g_storedFilters.customDiffFilter[0] : true) && (g_storedFilters.customDiffFilter[1] != 0 ? level.placement < g_storedFilters.customDiffFilter[1] : true)) levelDiff = 4;
 
 	bool byLength = g_storedFilters.lengthFilter[levelLength] || g_storedFilters.lengthFilter == g_defaultFilters.lengthFilter;
-	bool byDifficulty = diffFilter || g_storedFilters.diffFilter == g_defaultFilters.diffFilter;
+	bool byDifficulty = g_storedFilters.diffFilter[levelDiff] || g_storedFilters.diffFilter == g_defaultFilters.diffFilter;
 	bool byRate = g_storedFilters.rated ? g_levelsData[level.levelID].rated : (g_storedFilters.unrated ? g_levelsData[level.levelID].unrated : true);
 	bool byPlayer = (g_storedFilters.completed ? (g_usersRecords.contains(g_storedFilters.username) ? std::ranges::find(g_usersRecords[g_storedFilters.username], level.id) != g_usersRecords[g_storedFilters.username].end() : false) : true);
 	bool byCreator = (g_storedFilters.byHolder ? g_levelsData[level.levelID].holder == g_storedFilters.holder : true);

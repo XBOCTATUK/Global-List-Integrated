@@ -1,3 +1,9 @@
+# 2.0.6
+- <co>Changed</c> the difficulty filter again (top 50: top 1 - 50, top 150: top 51 - 150, etc.).
+
+# 2.0.5
+- <cc>XBOCTATUK</c> aka <cc>Taily</c> the <co>incredibly</c> <cr>stupid</c> fox, v2.0.5 was <cj>skipped</c>.
+
 # 2.0.4
 - <cg>Added</c> description to the filter menu.
 - The search bar is now case-insensitive.
