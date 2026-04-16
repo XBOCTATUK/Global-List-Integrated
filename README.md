@@ -1,6 +1,11 @@
 # Global List Integration
 This mod adds some <b>features</b> from [demonlist.org](https://demonlist.org) to GD.
 
+![Mod Version](https://api.geode-sdk.org/v1/mods/xboctatuk.globallistpositions/status_badge?stat=version)
+![Downloads](https://api.geode-sdk.org/v1/mods/xboctatuk.globallistpositions/status_badge?stat=downloads)
+![GD Version](https://api.geode-sdk.org/v1/mods/xboctatuk.globallistpositions/status_badge?stat=gd_version)
+![Geode Version](https://api.geode-sdk.org/v1/mods/xboctatuk.globallistpositions/status_badge?stat=geode_version)
+
 ## Mod Features:
 - A button in the level search screen that opens the demonlist
 - Search levels by name or ID on the demonlist screen
